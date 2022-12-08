@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+<style>
+
+body { font-family: Helvetica, sans-serif }
+
+h1 { text-align: center }
+
+form > div:first-child { margin-top: 1em; text-align: center }
+
+input[name=words] { font-size: large }
+input[type=submit] { margin-left: 1ch; font-size: large }
+
+form > div:nth-child(2) { margin-top: 3em; position: relative; left: 25%; width: 75% }
+summary { outline: none }
+details > div { margin-top: 1.5em; height: 1em }
+
+#range { position: relative }
+input[type='range'] { pointer-events: none; position: absolute; top: 0; left: 15em; width: 25em; outline: 0 }
+input[type='range']::-webkit-slider-thumb { pointer-events: all; position: relative; z-index: 1; outline: 0 }
+
+input[type='range']::-moz-range-thumb {
+    pointer-events: all;
+    position: relative;
+    z-index: 10;
+    -moz-appearance: none;
+    background: linear-gradient(to bottom, #ededed 0%, #dedede 100%);
+    width: 11px;
+}
+
+input[type='range']::-moz-range-track {
+    position: relative;
+    z-index: -1;
+    background-color: rgba(0, 0, 0, .15);
+    border: 0;
+}
+
+input[type='range']:last-of-type::-moz-range-track {
+    -moz-appearance: none;
+    background: none transparent;
+    border: 0;
+}
+
+input[type='radio'] { margin-left: 2em }
+
+</style>
+</head>
+
+<body>
+
+<p style="text-align:right"><a href="/search">search (Find Words in Context)</a></p>
+
+<h1>n-grams</h1>
+
+<form action="/explorer/ukpga/1966-2016" method="GET">
+	<div>
+		<input name="words" size="55" autofocus required placeholder="comma separated list of terms">
+		<input type="submit" value="Search">
+	</div>
+	<div>
+		<details open>
+			<summary>options</summary>
+			<div>
+				<label for="doc-type">Document type:</label>
+				<select id="doc-type">
+					<option value="all">all UK &amp; EU legislation</option>
+					<option value="uk">all UK legislation</option>
+					<option value="primary">all primary legislation</option>
+					<option value="ukpga" selected>&nbsp;&nbsp;&nbsp;&nbsp;UK Public General Acts</option>
+					<option value="ukla">&nbsp;&nbsp;&nbsp;&nbsp;UK Local Acts</option>
+					<option value="asp">&nbsp;&nbsp;&nbsp;&nbsp;Acts of the Scottish Parliament</option>
+					<option value="anaw">&nbsp;&nbsp;&nbsp;&nbsp;Acts of the National Assembly for Wales</option>
+					<option value="mwa">&nbsp;&nbsp;&nbsp;&nbsp;Measures of the National Assembly for Wales</option>
+					<option value="ukcm">&nbsp;&nbsp;&nbsp;&nbsp;Church Measures</option>
+					<option value="nia">&nbsp;&nbsp;&nbsp;&nbsp;Acts of the Northern Ireland Assembly</option>
+					<option value="secondary">all secondary legislation</option>
+					<option value="uksi">&nbsp;&nbsp;&nbsp;&nbsp;UK Statutory Instruments</option>
+					<option value="wsi">&nbsp;&nbsp;&nbsp;&nbsp;Wales Statutory Instruments</option>
+					<option value="ssi">&nbsp;&nbsp;&nbsp;&nbsp;Scottish Statutory Instruments</option>
+					<option value="nisi">&nbsp;&nbsp;&nbsp;&nbsp;Northern Ireland Orders in Council</option>
+					<option value="nisr">&nbsp;&nbsp;&nbsp;&nbsp;Northern Ireland Statutory Rules</option>
+					<option value="eu">all EU legislation</option>
+					<option value="eur">&nbsp;&nbsp;&nbsp;&nbsp;EU regulations</option>
+					<option value="eudn">&nbsp;&nbsp;&nbsp;&nbsp;EU decisions</option>
+					<option value="eudr">&nbsp;&nbsp;&nbsp;&nbsp;EU directives</option>
+				</select>
+			</div>
+			<div id="range">
+				<span>Years:</span> <span id="years">1970-2022</span>
+				<input type="range" id="start" min="1900" max="2022" value="1970">
+				<input type="range" id="end" min="1900" max="2022" value="2022">
+			</div>
+			<div>
+				<span>Search type:</span>
+				<label>
+					<input type="radio" checked>
+					<span>case insensitive</span>
+				</label>
+				<label>
+					<input type="radio" name="case" value="true">
+					<span>case sensitive</span>
+				</label>
+				<label>
+					<input type="radio" name="stem" value="true">
+					<span>word stems</span>
+				</label>
+			</div>
+		</details>
+	</div>
+</form>
+
+<script>
+
+document.getElementById('start').addEventListener('input', function(event) {
+	var start = Number(this.value);
+	var end = Number(document.getElementById('end').value);
+	if (end < start)
+		document.getElementById('end').value = start;
+	document.getElementById('years').textContent = start + '-' + end;
+}, false);
+document.getElementById('end').addEventListener('input', function(event) {
+	var start = Number(document.getElementById('start').value);
+	var end = Number(this.value);
+	if (start > end)
+		document.getElementById('start').value = end;
+	document.getElementById('years').textContent = start + '-' + end;
+}, false);
+
+Array.prototype.forEach.call(document.querySelectorAll('input[type=radio]'), function(radio) {
+	radio.addEventListener('change', function() {
+		Array.prototype.forEach.call(document.querySelectorAll('input[type=radio]'), function(rdo) {
+			if (rdo !== radio) rdo.checked = false;
+		});
+	}, false);
+});
+
+document.getElementsByTagName('form')[0].addEventListener('submit', function() {
+	var docType = document.getElementById('doc-type').value;
+	var start = document.getElementById('start').value;
+	var end = document.getElementById('end').value;
+	this.setAttribute('action', '/explorer/' + docType + '/' + start + '-' + end);
+}, false);
+
+</script>
+
+</body>
+
+</html>

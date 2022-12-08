@@ -1,0 +1,45 @@
+[
+    {
+        "Classification": "hadoop-env",
+        "Properties": {},
+        "Configurations": [
+            {
+                "Classification": "export",
+                "Properties": {
+                    "HADOOP_CLASSPATH": "$HADOOP_CLASSPATH:`hbase classpath`:/usr/lib/hbase/*:/usr/lib/hbase/lib/*"
+                }
+            }
+        ]
+    },
+    {
+        "Classification": "mapred-site",
+        "Properties": {
+            "mapreduce.map.memory.mb": "8192",
+            "mapreduce.reduce.memory.mb": "8192",
+            "mapreduce.map.java.opts": "-Xmx6g",
+            "mapreduce.reduce.shuffle.input.buffer.percent": "0.2",
+            "mapreduce.application.classpath": "$HADOOP_CLASSPATH:`hbase classpath`:/usr/lib/hbase/*:/usr/lib/hbase/lib/*",
+            "mapreduce.reduce.java.opts": "-Xmx6g"
+        }
+    },
+    {
+        "Classification": "yarn-site",
+        "Properties": {
+            "yarn.application.classpath": "$HADOOP_CLASSPATH:`hbase classpath`:/usr/lib/hbase/*:/usr/lib/hbase/lib/*"
+        }
+    },
+    {
+        "Classification": "hbase",
+        "Properties": {
+            "hbase.emr.storageMode": "s3"
+        }
+    },
+    {
+        "Classification": "hbase-site",
+        "Properties": {
+            "hbase.client.keyvalue.maxsize": "0",
+            "hbase.hstore.blockingStoreFiles": "200",
+            "hbase.rootdir": "s3://BUCKET/PATH"
+        }
+    }
+]
