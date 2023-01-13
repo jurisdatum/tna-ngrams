@@ -23,8 +23,8 @@ import uk.gov.legislation.research.ngrams.api.DateRange.MonthRange;
 @WebServlet("/explorer/*")
 public class Explorer extends HttpServlet {
 		
-	static final Pattern counts = Pattern.compile("^/explorer/[a-z]{3,9}(/\\d{4}(-\\d{4})?)?(/data\\.(csv|tsv|json|csv-metadata\\.json|rdf|ttl))?$");
-	static final Pattern documents = Pattern.compile("^/explorer/[a-z]{3,9}(/\\d{4}(-\\d{4})?)?/instances(/data\\.(csv|tsv|json|csv-metadata\\.json|rdf|ttl))?$");
+	static final Pattern counts = Pattern.compile("^/explorer/[a-z]{2,9}(/\\d{4}(-\\d{4})?)?(/data\\.(csv|tsv|json|csv-metadata\\.json|rdf|ttl))?$");
+	static final Pattern documents = Pattern.compile("^/explorer/[a-z]{2,9}(/\\d{4}(-\\d{4})?)?/instances(/data\\.(csv|tsv|json|csv-metadata\\.json|rdf|ttl))?$");
 	
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

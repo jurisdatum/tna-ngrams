@@ -38,7 +38,7 @@ public class CountsFormatter implements Counts {
 	private SortedMap<Short, LinkedHashMap<String, Integer>> counts;
 	private ArrayList<Map<Short, Double>> scales;
 
-	CountsFormatter(Legislation.Type legType, Ngrams.Type ngType, LinkedHashSet<String> ngrams, LinkedHashMap<String, NavigableMap<Short, Integer>> counts, DateRange years) throws IOException {
+	CountsFormatter(Legislation.Searchable legType, Ngrams.Type ngType, LinkedHashSet<String> ngrams, LinkedHashMap<String, NavigableMap<Short, Integer>> counts, DateRange years) throws IOException {
 		this.legType = legType;
 		this.ngType = ngType;
 		this.counts = prunePadAndInvert(counts, years);

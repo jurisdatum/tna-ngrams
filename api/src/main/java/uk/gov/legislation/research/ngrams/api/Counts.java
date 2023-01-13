@@ -44,8 +44,8 @@ class Counts {
 
 		uk.gov.legislation.research.ngrams.Counts counts;
 		Configuration conf = HBase.config();
-		LinkedHashMap<String, NavigableMap<Short, Integer>> results = uk.gov.legislation.research.ngrams.hadoop.hbase.Counts.getCounts(conf, (Legislation.Type) legType, ngrams, ngType);
-		counts = new CountsFormatter((Legislation.Type) legType, ngType, ngrams, results, dates);
+		LinkedHashMap<String, NavigableMap<Short, Integer>> results = uk.gov.legislation.research.ngrams.hadoop.hbase.Counts.getCounts(conf, legType, ngrams, ngType);
+		counts = new CountsFormatter(legType, ngType, ngrams, results, dates);
 
 		switch (filename) {
 			case "data.json":

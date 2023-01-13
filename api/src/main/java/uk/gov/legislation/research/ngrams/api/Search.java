@@ -103,7 +103,7 @@ public class Search  extends HttpServlet {
 			return;
 		}
 //		int limit = getLimit(request);
-		SortedMap<Integer, LinkedHashMap<String, Long>> ngrams = uk.gov.legislation.research.ngrams.hadoop.hbase.Search1.get(HBase.config(), (Legislation.Type) legType, components, ngType, beginning);
+		SortedMap<Integer, LinkedHashMap<String, Long>> ngrams = uk.gov.legislation.research.ngrams.hadoop.hbase.Search1.get(HBase.config(), legType, components, ngType, beginning);
 		ngrams = SearchFormatter.untokenize(ngrams);
 
 		if (request.getRequestURI().toLowerCase().endsWith("/data.json")) {

@@ -52,7 +52,7 @@ public class Scales {
         return new Put(row).addColumn(fam, col, val);
     }
 
-    public static ArrayList<Map<Short, Double>> get(Configuration conf, Legislation.Type legType, Ngrams.Type ngType) throws IOException {
+    public static ArrayList<Map<Short, Double>> get(Configuration conf, Legislation.Searchable legType, Ngrams.Type ngType) throws IOException {
         Connection connection = ConnectionFactory.createConnection(conf);
         try {
             Table table = connection.getTable(tableName);

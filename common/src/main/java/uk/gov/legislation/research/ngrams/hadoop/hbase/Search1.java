@@ -93,7 +93,7 @@ public class Search1 {
         return map;
     }
 
-    public static SortedMap<Integer, LinkedHashMap<String, Long>> get(Configuration conf, Legislation.Type legType, Set<String> components, Ngrams.Type ngType, boolean beginning) throws IOException {
+    public static SortedMap<Integer, LinkedHashMap<String, Long>> get(Configuration conf, Legislation.Searchable legType, Set<String> components, Ngrams.Type ngType, boolean beginning) throws IOException {
         byte[] fam = beginning ? startsWithFam : allFam;
         Connection connection = ConnectionFactory.createConnection(conf);
         try {

@@ -72,7 +72,6 @@ public class Counts {
             int i2 = key.lastIndexOf('|');
             int i1 = key.lastIndexOf('|', i2 - 1);
             String ngram = key.substring(0, i1);
-//            Legislation.Type legType = Legislation.Type.valueOf(key.substring(i1 + 1, i2));
             Legislation.Searchable legType;
             try {
                 legType = Legislation.Type.valueOf(key.substring(i1 + 1, i2));
@@ -142,7 +141,7 @@ public class Counts {
         return table.get(get);
     }
 
-    private static Get getCounts(Legislation.Type legType, String ngram, Ngrams.Type ngType) {
+    private static Get getCounts(Legislation.Searchable legType, String ngram, Ngrams.Type ngType) {
         String key = new Key(legType, ngType, ngram).toString();
         byte[] row = Bytes.toBytes(key);
         return new Get(row).addFamily(countsFamily);
@@ -162,7 +161,7 @@ public class Counts {
         return convert(counts1);
     }
 
-    public static LinkedHashMap<String, NavigableMap<Short, Integer>> getCounts(Configuration conf, Legislation.Type legType, LinkedHashSet<String> ngrams, Ngrams.Type ngType) throws IOException {
+    public static LinkedHashMap<String, NavigableMap<Short, Integer>> getCounts(Configuration conf, Legislation.Searchable legType, LinkedHashSet<String> ngrams, Ngrams.Type ngType) throws IOException {
         Connection connection = ConnectionFactory.createConnection(conf);
         try {
             ArrayList<Get> gets = new ArrayList<>(ngrams.size());
@@ -193,7 +192,7 @@ public class Counts {
 
     /* get document counts */
 
-    private static Get getDocuments(Legislation.Type legType, String ngram, Ngrams.Type ngType) {
+    private static Get getDocuments(Legislation.Searchable legType, String ngram, Ngrams.Type ngType) {
         String key = new Key(legType, ngType, ngram).toString();
         byte[] row = Bytes.toBytes(key);
         return new Get(row).addFamily(docsFamily);
@@ -214,7 +213,7 @@ public class Counts {
         NavigableMap<byte[], byte[]> raw = result.getFamilyMap(docsFamily);
         return convertDocumentCounts(raw);
     }
-    public static LinkedHashMap<String, NavigableMap<Short, LinkedHashMap<String, Integer>>> getDocumentCounts(Configuration conf, Legislation.Type legType, LinkedHashSet<String> ngrams, Ngrams.Type ngType) throws IOException {
+    public static LinkedHashMap<String, NavigableMap<Short, LinkedHashMap<String, Integer>>> getDocumentCounts(Configuration conf, Legislation.Searchable legType, LinkedHashSet<String> ngrams, Ngrams.Type ngType) throws IOException {
         Connection connection = ConnectionFactory.createConnection(conf);
         try {
             ArrayList<Get> gets = new ArrayList<>(ngrams.size());
@@ -243,7 +242,7 @@ public class Counts {
         }
     }
 
-    public static LinkedHashMap<String, LinkedHashMap<String, Integer>> getDocumentCounts(Configuration conf, Legislation.Type legType, LinkedHashSet<String> ngrams, Ngrams.Type ngType, short year) throws IOException {
+    public static LinkedHashMap<String, LinkedHashMap<String, Integer>> getDocumentCounts(Configuration conf, Legislation.Searchable legType, LinkedHashSet<String> ngrams, Ngrams.Type ngType, short year) throws IOException {
         /* optimized for a single year */
         throw new UnsupportedOperationException();
     }
