@@ -41,7 +41,7 @@ public class Instances {
 		}
 
 		Configuration conf = HBase.config();
-		LinkedHashMap<String, NavigableMap<Short, LinkedHashMap<String, Integer>>> results = uk.gov.legislation.research.ngrams.hadoop.hbase.Counts.getDocumentCounts(conf, (Legislation.Type) legType, ngrams, ngType);
+		LinkedHashMap<String, NavigableMap<Short, LinkedHashMap<String, Integer>>> results = uk.gov.legislation.research.ngrams.hadoop.hbase.Counts.getDocumentCounts(conf, legType, ngrams, ngType);
 		InstancesFormatter counts = new InstancesFormatter(results, dates);
 
 		switch (filename) {

@@ -29,7 +29,7 @@ import uk.gov.legislation.research.ngrams.Ngrams;
 @WebServlet("/search/*")
 public class Search  extends HttpServlet {
 	
-	static final Pattern pattern = Pattern.compile("^/search/[a-z]{3,9}(/\\d{4}(-\\d{4})?)?(/data\\.(csv|tsv|json|csv-metadata\\.json|rdf|ttl))?$");
+	static final Pattern pattern = Pattern.compile("^/search/[a-z]{2,9}(/\\d{4}(-\\d{4})?)?(/data\\.(csv|tsv|json|csv-metadata\\.json|rdf|ttl))?$");
 	
 	private int getLimit(HttpServletRequest request) {
 		String param = request.getParameter("limit");
