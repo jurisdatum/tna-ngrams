@@ -15,20 +15,26 @@ public class Update {
     private static Logger logger = Logger.getLogger(Update.class.getName());
 
     public static void main(String[] args) throws Exception {
-        Integer cutoff;
+        Integer firstYear;
         try {
-            cutoff = args.length == 0 ? null : Integer.parseInt(args[0]);
+            firstYear = args.length == 0 ? null : Integer.parseInt(args[0]);
         } catch (NumberFormatException e) {
-            cutoff = null;
+            firstYear = null;
+        }
+        Integer lastYear;
+        try {
+            lastYear = args.length < 2 ? null : Integer.parseInt(args[1]);
+        } catch (NumberFormatException e) {
+            lastYear = null;
         }
         boolean local = Arrays.stream(args).anyMatch(arg -> arg.equalsIgnoreCase("--local"));
         boolean test = Arrays.stream(args).anyMatch(arg -> arg.equalsIgnoreCase("--test"));
-        run(cutoff, local, test);
+        run(firstYear, lastYear, local, test);
     }
 
     static final String TestPropertyName = "uk.gov.legislation.update.test";
 
-    public static void run(Integer cutoff, boolean local, boolean test) throws Exception {
+    public static void run(Integer firstYear, Integer lastYear, boolean local, boolean test) throws Exception {
         Configuration conf = new Configuration();
 
         Path temp1, temp2;
@@ -44,7 +50,7 @@ public class Update {
         conf.setBoolean(TestPropertyName, test);
 
         boolean ok;
-        ok = Step1.run(conf, cutoff, temp1, local);
+        ok = Step1.run(conf, firstYear, lastYear, temp1, local);
         if (!ok)
             return;
         ok = Step2.run(conf, temp1, temp2);

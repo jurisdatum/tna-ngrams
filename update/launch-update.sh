@@ -3,6 +3,9 @@
 #  the subnet id
 #  the S3 location of the .jar file
 #  the S3 location for HBase data
+
+# Also, to limit the year range, add ",Args=1900,2022" to the --steps option
+
 sed "s|s3:\/\/BUCKET\/PATH|$3|g" configurations.json > temp_config.json
 aws emr create-cluster --name "Ngrams update" \
   --region eu-west-2 \

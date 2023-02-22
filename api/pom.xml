@@ -7,7 +7,7 @@
     <parent>
         <groupId>uk.gov.legislation.research</groupId>
         <artifactId>ngrams</artifactId>
-        <version>2.0.1</version>
+        <version>2.0.2</version>
     </parent>
 
     <artifactId>ngrams-api</artifactId>
